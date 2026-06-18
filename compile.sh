@@ -49,7 +49,18 @@ fi
 cd "$dir"
 
 file "$sdk_dir/$sdk_file"
-tar -Jxf "$sdk_dir/$sdk_file" -C "$sdk_home_dir" --strip=1
+case "$sdk_file" in
+	*.tar.xz)
+		tar -Jxf "$sdk_dir/$sdk_file" -C "$sdk_home_dir" --strip=1
+		;;
+	*.tar.zst)
+		tar --zstd -xf "$sdk_dir/$sdk_file" -C "$sdk_home_dir" --strip=1
+		;;
+	*)
+		echo "Unsupported SDK archive format: $sdk_file"
+		exit 1
+		;;
+esac
 
 cd "$sdk_home_dir"
 

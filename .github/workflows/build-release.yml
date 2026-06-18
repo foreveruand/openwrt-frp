@@ -123,7 +123,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ env.CACHE_DIR }}
           key: ${{ runner.os }}:openwrt-frp:${{ env.ARCH }}:release:cache:${{ github.run_number }}
@@ -133,7 +133,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update && \
-            sudo apt-get install -yq gettext libncurses5-dev xsltproc
+            sudo apt-get install -yq gettext libncurses5-dev xsltproc zstd
 
       - name: Prepare SDK Home
         run: |
